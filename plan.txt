@@ -1,1 +1,8 @@
 Auth Page -> Movie Page -> Watchlist Page
+
+TODO:
+Remove Redundant Login Methods
+Enable Login Functionality (uses cookies)
+
+Fetch Movies
+Enable Pagination
