@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "avatar.vercel.sh",
       },
+      {
+      protocol: "https",
+      hostname: "media.themoviedb.org",
+      pathname: "/t/p/**",
+    },
+    {
+      protocol: "https",
+      hostname: "image.tmdb.org",
+      pathname: "/t/p/**",
+    },
     ],
   },
 };
