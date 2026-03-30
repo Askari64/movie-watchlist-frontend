@@ -22,7 +22,7 @@ function Navbar() {
 
           {/* LEFT: Logo */}
           <Link href="/" className="text-lg font-semibold">
-            Watchlist
+            BingeBoard
           </Link>
 
           {/* CENTER: Desktop Nav */}
