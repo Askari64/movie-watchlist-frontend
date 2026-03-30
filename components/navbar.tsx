@@ -16,7 +16,7 @@ function Navbar() {
   ]
 
   return (
-    <nav className="border-b bg-background">
+    <nav className="border-b bg-background sticky top-0">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-14 items-center justify-between">
 
