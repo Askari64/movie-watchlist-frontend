@@ -12,8 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { GalleryVerticalEndIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, LoginInput } from "@/lib/schemas/auth.schema";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export function LoginForm({
   className,
@@ -21,16 +24,24 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const router = useRouter();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const form = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  useEffect(() => {
+    const rootError = form.formState.errors.root;
+    if (!rootError) return;
+    const timer = setTimeout(() => {
+      form.clearErrors("root");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [form.formState.errors.root, form]);
 
+  const formSubmit = async (values: LoginInput) => {
     try {
       const res = await fetch("auth/login", {
         method: "POST",
@@ -38,7 +49,7 @@ export function LoginForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(values),
       });
 
       const data = await res.json();
@@ -48,16 +59,16 @@ export function LoginForm({
       }
 
       router.push("/movies");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+    } catch (error: any) {
+      form.setError("root", {
+        message: error.message || "Something went wrong",
+      });
     }
   };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={form.handleSubmit(formSubmit)}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <Link
@@ -67,9 +78,9 @@ export function LoginForm({
               <div className="flex size-8 items-center justify-center rounded-md">
                 <GalleryVerticalEndIcon className="size-6" />
               </div>
-              <span className="sr-only">BingeBoard.</span>
+              <span className="sr-only">BingeBoard</span>
             </Link>
-            <h1 className="text-xl font-bold">Welcome to BingeBoard</h1>
+            <h1 className="text-xl font-bold">Welcome to BingeBoard.</h1>
             <FieldDescription>
               Don&apos;t have an account? <Link href="/signup">Sign up</Link>
             </FieldDescription>
@@ -82,11 +93,15 @@ export function LoginForm({
               id="email"
               type="email"
               placeholder="m@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
+              {...form.register("email")}
             />
           </Field>
+          {form.formState.errors.email && (
+            <p className="text-sm text-red-500">
+              {form.formState.errors.email.message}
+            </p>
+          )}
 
           {/*Password */}
           <Field>
@@ -95,19 +110,27 @@ export function LoginForm({
               id="password"
               type="password"
               placeholder="Your Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
+              {...form.register("password")}
             />
           </Field>
+          {form.formState.errors.password && (
+            <p className="text-sm text-red-500">
+              {form.formState.errors.password.message}
+            </p>
+          )}
 
           {/*Error */}
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {form.formState.errors.root && (
+            <p className="text-sm text-red-500">
+              {form.formState.errors.root.message}
+            </p>
+          )}
 
           {/*Login Button */}
           <Field>
-            <Button type="submit" disabled={loading}>
-              {loading ? "logging in..." : "login"}
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? "logging in..." : "login"}
             </Button>
           </Field>
         </FieldGroup>
