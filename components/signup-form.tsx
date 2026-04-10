@@ -10,7 +10,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { GalleryVerticalEndIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -33,27 +32,36 @@ export function SignupForm({
     },
   });
 
+  useEffect(() => {
+    const rootError = form.formState.errors.root;
+    if (!rootError) return;
+    const timer = setTimeout(() => {
+      form.clearErrors("root");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [form.formState.errors.root, form]);
+
   const formSubmit = async (values: SignupInput) => {
     try {
       const res = await fetch("auth/signup", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(values)
-      })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Invalid Credentials")
+        throw new Error(data.message || "Invalid Credentials");
       }
 
-      router.push("/movies")
+      router.push("/movies");
     } catch (error: any) {
       form.setError("root", {
-        message: error.message || "Something went wrong"
-      })
+        message: error.message || "Something went wrong",
+      });
     }
-  }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -78,7 +86,9 @@ export function SignupForm({
             />
           </Field>
           {form.formState.errors.name && (
-            <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+            <p className="text-sm text-red-500">
+              {form.formState.errors.name.message}
+            </p>
           )}
 
           {/*Email */}
@@ -93,7 +103,9 @@ export function SignupForm({
             />
           </Field>
           {form.formState.errors.email && (
-            <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+            <p className="text-sm text-red-500">
+              {form.formState.errors.email.message}
+            </p>
           )}
 
           {/*Password */}
@@ -107,8 +119,10 @@ export function SignupForm({
               {...form.register("password")}
             />
           </Field>
-           {form.formState.errors.password && (
-            <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
+          {form.formState.errors.password && (
+            <p className="text-sm text-red-500">
+              {form.formState.errors.password.message}
+            </p>
           )}
 
           {/*Error */}
@@ -119,7 +133,11 @@ export function SignupForm({
           )}
 
           <Field>
-            <Button type="submit" disabled={form.formState.isSubmitting}>{form.formState.isSubmitting ? "Creating Account" : "Create Account"}</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting
+                ? "Creating Account"
+                : "Create Account"}
+            </Button>
           </Field>
         </FieldGroup>
       </form>
