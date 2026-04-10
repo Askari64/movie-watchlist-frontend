@@ -18,7 +18,7 @@ import { loginSchema, LoginInput } from "@/lib/schemas/auth.schema";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export function LoginForm({
+export function SigninForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -71,15 +71,6 @@ export function LoginForm({
       <form onSubmit={form.handleSubmit(formSubmit)}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <Link
-              href="/"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEndIcon className="size-6" />
-              </div>
-              <span className="sr-only">BingeBoard</span>
-            </Link>
             <h1 className="text-xl font-bold">Welcome to BingeBoard.</h1>
             <FieldDescription>
               Don&apos;t have an account? <Link href="/signup">Sign up</Link>
