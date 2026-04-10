@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/movies/:path*",
+        source: "/api/movies/:path*",
         destination: "http://127.0.0.1:5000/movies/:path*",
       },
       {
-        source: "/auth/:path*",
+        source: "/api/auth/:path*",
         destination: "http://127.0.0.1:5000/auth/:path*",
       },
     ];

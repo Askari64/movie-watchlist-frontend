@@ -26,7 +26,7 @@ export function CardImage({title, imageUrl}: CardImageProps) {
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardFooter>
-        <Button className="w-full">View Event</Button>
+        <Button className="w-full">More Info</Button>
       </CardFooter>
     </Card>
   )
