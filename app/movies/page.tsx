@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CardImage } from "@/components/cardImage";
 
+// 👇 Import the service function and type
+import { getMovies, type Movie } from "@/services/movies";
+
 export default function Movies() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [totalPages, setTotalPages] = useState(1);
@@ -21,24 +24,9 @@ export default function Movies() {
     const fetchMovies = async () => {
       try {
         setLoading(true);
+        setError(""); // Clear previous errors
 
-        const params = new URLSearchParams({
-          page: String(page),
-          limit: String(limit),
-        });
-
-        const res = await fetch(
-          `http://localhost:5000/movies?${params.toString()}`,
-          {
-            credentials: "include",
-          },
-        );
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || "Failed to fetch");
-        }
+        const data = await getMovies(page, limit);
 
         setMovies(data.data);
         setTotalPages(data.meta.totalPages);
@@ -79,7 +67,6 @@ export default function Movies() {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 space-y-8">
-      {/* === PAGE HEADER === */}
       <section>
         <h1 className="text-3xl font-bold tracking-tight">Movies</h1>
         <p className="text-muted-foreground mt-1">
@@ -87,10 +74,9 @@ export default function Movies() {
         </p>
       </section>
 
-      {/* === MOVIE GRID === */}
       <section>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {movies.map((movie: any) => (
+          {movies.map((movie) => (
             <CardImage
               key={movie.id}
               movieId={movie.id}
@@ -101,7 +87,6 @@ export default function Movies() {
         </div>
       </section>
 
-      {/* === PAGINATION === */}
       {totalPages > 1 && (
         <section className="pt-6 border-t border-border">
           <div className="flex items-center justify-between">
