@@ -22,7 +22,7 @@ export function CardImage({title, imageUrl, movieId}: CardImageProps) {
         alt={title}
         width="247"
         height="139"
-        className="relative z-20 aspect-video w-full object-cover brightness-60 dark:brightness-40"
+        className="relative z-20 aspect-video w-full object-fill brightness-80 dark:brightness-40"
       />
       <CardHeader>
         <CardTitle>{title}</CardTitle>
