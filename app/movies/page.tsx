@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { CardImage } from "@/components/cardImage"
 
 export default function Movies() {
   const searchParams = useSearchParams()
@@ -70,7 +71,12 @@ export default function Movies() {
       <h1>Movies</h1>
 
       {movies.map((movie: any) => (
-        <div key={movie.id}>{movie.title}</div>
+        <CardImage
+          key={movie.id}
+          movieId={movie.id}
+          title={movie.title}
+          imageUrl={movie.posterURL}
+        />
       ))}
 
       <div style={{ marginTop: "20px" }}>
