@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import AddToWatchlist from "@/components/add-to-watchlist"
 import Link from "next/link"
 
 type CardImageProps = {
@@ -17,6 +18,7 @@ type CardImageProps = {
 export function CardImage({title, imageUrl, movieId}: CardImageProps) {
   return (
     <Card className="relative mx-auto max-w-[250] pt-0">
+      <AddToWatchlist />
       <img
         src={imageUrl}
         alt={title}
