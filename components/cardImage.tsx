@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -5,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Image from "next/image"
 import Link from "next/link"
 
 type CardImageProps = {
@@ -16,12 +16,10 @@ type CardImageProps = {
 
 export function CardImage({title, imageUrl, movieId}: CardImageProps) {
   return (
-    <Card className="relative mx-auto max-w-xs pt-0">
-      <Image
+    <Card className="relative mx-auto max-w-[250] pt-0">
+      <img
         src={imageUrl}
         alt={title}
-        width="247"
-        height="139"
         className="relative z-20 aspect-video w-full object-fill brightness-80 dark:brightness-40"
       />
       <CardHeader>
