@@ -21,7 +21,7 @@ try {
 
   if (!contentType || !contentType.includes("application/json")) {
     //Response not JSON - throw generic error with status text
-    throw new Error(`Server Error (${response.status}). Please try again later.`)
+    throw new Error(`Server Error (${response.status}). Server might be offline. Please try again later.`)
   }
   // Step 3: Parse the JSON response
   const data = await response.json()
