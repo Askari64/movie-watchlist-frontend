@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { signupSchema, SignupInput } from "@/lib/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signup } from "@/services/auth";
 
 export function SignupForm({
   className,
@@ -43,19 +44,10 @@ export function SignupForm({
 
   const formSubmit = async (values: SignupInput) => {
     try {
-      const res = await fetch("auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid Credentials");
-      }
-
-      router.push("/movies");
+      await signup(values.name, values.email, values.password);
+      
+      // Success - redirect to movies page
+      router.push("/signin");
     } catch (error: any) {
       form.setError("root", {
         message: error.message || "Something went wrong",
