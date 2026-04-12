@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginInput } from "@/lib/schemas/auth.schema";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { signin } from "@/services/auth";
 
 export function SigninForm({
   className,
@@ -42,22 +43,11 @@ export function SigninForm({
 
   const formSubmit = async (values: LoginInput) => {
     try {
-      const res = await fetch("auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+     await signin(values.email, values.password);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid Credentials");
-      }
-
+     // Success - redirect to movies page
       router.push("/movies");
+      router.refresh(); // Refresh to update auth state in UI after login
     } catch (error: any) {
       form.setError("root", {
         message: error.message || "Something went wrong",
