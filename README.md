@@ -1,10 +1,11 @@
 ## TODO
-1. Write middleware based protected routes code
+1. ~~Write middleware based protected routes code~~
 2. Implement Logout through navbar avatar dropdown
 3. Implement Add to Watchlist with the dropdown on cards
 4. Implement Watchlist Page - read your watchlist, edit and delete code
 5. Implement Contribute Page -  allows adding editing and deleting titles
 6. Implement Profile Page
+7. do token validation check on proxy/middleware to avoid user with expired token accessing protected route
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
