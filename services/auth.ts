@@ -28,6 +28,11 @@ export async function signup(name: string, email: string, password: string) {
 }
 
 /**
- * TODO
- * ADD LOGOUT FUNCTION
+ * 
+ * @returns logout user by deleting cookie
  */
+export async function logout() {
+    return api("/auth/logout", {
+        method: "POST",
+    });
+}
