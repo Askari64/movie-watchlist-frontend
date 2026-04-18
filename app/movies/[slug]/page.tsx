@@ -3,25 +3,32 @@
 import { useParams } from "next/navigation";
 import { useGetMovie } from "@/hooks/useGetMovie";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, Film } from "lucide-react";
-import AddToWatchlist from "@/components/add-to-watchlist";
+import { Clock, Calendar, Film, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function MovieDetailPage() {
   const params = useParams();
-  const movieId = params.slug as string; 
-  
+  const movieId = params.slug as string;
+
   const { data, isLoading, error } = useGetMovie(movieId);
-  const movie = data?.data || data; // Adjust based on your API response shape
+  const movie = data?.data || data;
 
   if (isLoading) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 py-12 text-center">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-muted rounded w-1/3 mx-auto" />
-          <div className="h-64 bg-muted rounded max-w-2xl mx-auto" />
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
+          <div className="animate-pulse space-y-6 md:space-y-8">
+            <div className="h-5 md:h-6 bg-muted rounded w-20 md:w-24" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="aspect-2/3 bg-muted rounded-xl md:rounded-2xl max-w-[250px] md:max-w-none mx-auto md:mx-0" />
+              <div className="md:col-span-2 space-y-4 md:space-y-6">
+                <div className="h-8 md:h-12 bg-muted rounded w-3/4" />
+                <div className="h-5 md:h-6 bg-muted rounded w-1/2 md:w-1/4" />
+                <div className="h-24 md:h-32 bg-muted rounded" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -29,111 +36,142 @@ export default function MovieDetailPage() {
 
   if (error || !movie) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 py-12 text-center">
-        <h1 className="text-2xl font-bold mb-4">Movie Not Found</h1>
-        <p className="text-muted-foreground mb-6">
-          The movie you&apos;re looking for doesn&apos;t exist or couldn&apos;t be loaded.
-        </p>
-        <Button asChild>
-          <Link href="/movies">Back to Movies</Link>
-        </Button>
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="text-center space-y-3 md:space-y-4">
+          <h1 className="text-2xl md:text-3xl font-bold">Movie Not Found</h1>
+          <p className="text-sm md:text-base text-muted-foreground">
+            We couldn&apos;t find the movie you&apos;re looking for.
+          </p>
+          <Button asChild className="mt-4">
+            <Link href="/movies">Browse Movies</Link>
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-8 space-y-8">
+    <div className="min-h-screen">
       {/* Back Button */}
-      <Button asChild variant="ghost" className="mb-4">
-        <Link href="/movies">← Back to Movies</Link>
-      </Button>
+      <div className="container mx-auto max-w-7xl px-4 pt-4 md:pt-6">
+        <Button asChild variant="ghost" size="sm">
+          <Link href="/movies">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Movies
+          </Link>
+        </Button>
+      </div>
 
-      {/* Hero Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Poster */}
-        <div className="md:col-span-1 relative">
-          <Card className="overflow-hidden">
-            <img
-              src={movie.posterURL}
-              alt={movie.title}
-              className="w-full h-auto object-cover"
-            />
-          </Card>
-          
-          {/* Watchlist Button */}
-          <div className="mt-4">
-            <AddToWatchlist movieId={movie.id} />
-          </div>
-        </div>
-
-        {/* Details */}
-        <div className="md:col-span-2 space-y-6">
-          {/* Title & Year */}
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight">
-              {movie.title}
-              <span className="text-muted-foreground text-2xl ml-3">
-                ({movie.releaseYear})
-              </span>
-            </h1>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="flex flex-wrap gap-4">
-            {movie.runtime && (
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span>{movie.runtime} min</span>
+      {/* Content */}
+      <div className="container mx-auto max-w-7xl px-4 py-6 md:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
+          {/* Poster Column */}
+          <div className="md:col-span-1">
+            {/* Mobile: centered, smaller. Desktop: sticky, full size */}
+            <div className="md:sticky md:top-24 space-y-4">
+              <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl ring-1 ring-border/50 max-w-[250px] md:max-w-none mx-auto md:mx-0">
+                <img
+                  src={movie.posterURL}
+                  alt={movie.title}
+                  className="w-full h-auto object-cover"
+                />
               </div>
-            )}
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              <span>{movie.releaseYear}</span>
             </div>
+          </div>
+
+          {/* Details Column */}
+          <div className="md:col-span-2 space-y-6 md:space-y-8">
+            {/* Title Section */}
+            <div className="space-y-2 md:space-y-3">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight">
+                {movie.title}
+              </h1>
+              
+              {/* Meta Info - Wraps nicely on mobile */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground">
+                <span className="text-base md:text-lg">{movie.releaseYear}</span>
+                {movie.runtime && (
+                  <>
+                    <span className="w-1 h-1 bg-border rounded-full hidden sm:block" />
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                      <span className="text-sm md:text-base">{movie.runtime} min</span>
+                    </div>
+                  </>
+                )}
+                {movie.genres?.length > 0 && (
+                  <>
+                    <span className="w-1 h-1 bg-border rounded-full hidden sm:block" />
+                    <span className="text-sm md:text-base">{movie.genres[0]}</span>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Genres */}
             {movie.genres && movie.genres.length > 0 && (
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Film className="h-4 w-4" />
-                <span>{movie.genres.join(", ")}</span>
+              <div className="flex flex-wrap gap-1.5 md:gap-2">
+                {movie.genres.map((genre: string) => (
+                  <Badge 
+                    key={genre} 
+                    variant="secondary" 
+                    className="px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm font-medium rounded-full"
+                  >
+                    {genre}
+                  </Badge>
+                ))}
               </div>
             )}
-          </div>
 
-          {/* Genres as Badges */}
-          {movie.genres && movie.genres.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {movie.genres.map((genre: string) => (
-                <Badge key={genre} variant="secondary">
-                  {genre}
-                </Badge>
-              ))}
-            </div>
-          )}
+            {/* Overview */}
+            {movie.overview && (
+              <div className="space-y-3 md:space-y-4">
+                <h2 className="text-xl md:text-2xl font-semibold">Overview</h2>
+                <p className="text-muted-foreground leading-relaxed text-sm md:text-base lg:text-lg max-w-3xl">
+                  {movie.overview}
+                </p>
+              </div>
+            )}
 
-          {/* Overview */}
-          {movie.overview && (
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">Overview</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                {movie.overview}
-              </p>
-            </div>
-          )}
-
-          {/* Additional Info */}
-          <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-            <div>
-              <p className="text-sm text-muted-foreground">Added by</p>
-              <p className="font-medium">User #{movie.createdBy?.slice(0, 8) || "Unknown"}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Added on</p>
-              <p className="font-medium">
-                {new Date(movie.createdAt).toLocaleDateString()}
-              </p>
+            {/* Quick Stats - 2 columns on mobile, 3 on desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-border/50">
+              <div className="space-y-0.5 md:space-y-1">
+                <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-1 md:gap-1.5">
+                  <Calendar className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  Release Year
+                </p>
+                <p className="text-sm md:text-base font-medium">{movie.releaseYear}</p>
+              </div>
+              
+              {movie.runtime && (
+                <div className="space-y-0.5 md:space-y-1">
+                  <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-1 md:gap-1.5">
+                    <Clock className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                    Runtime
+                  </p>
+                  <p className="text-sm md:text-base font-medium">{movie.runtime} min</p>
+                </div>
+              )}
+              
+              <div className="space-y-0.5 md:space-y-1 col-span-2 md:col-span-1">
+                <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-1 md:gap-1.5">
+                  <Film className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  Added
+                </p>
+                <p className="text-sm md:text-base font-medium">
+                  {new Date(movie.createdAt).toLocaleDateString(undefined, { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                  })}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      
+      <div className="h-6 md:h-8" />
     </div>
   );
 }
