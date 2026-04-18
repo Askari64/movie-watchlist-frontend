@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CardImage } from "@/components/cardImage";
 import { Button } from "@/components/ui/button";
-import { getMovies, type Movie } from "@/services/movies";
+import {type Movie} from "@/services/movies"
+import { useGetAllMovies } from "@/hooks/useGetAllMovies";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Film, AlertCircle } from "lucide-react";
 
@@ -13,31 +12,14 @@ export default function Movies() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
-
   const page = Number(searchParams.get("page") || 1);
   const limit = 20;
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const data = await getMovies(page, limit);
-        setMovies(data.data);
-        setTotalPages(data.meta.totalPages);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // 👇 One line replaces all useState + useEffect!
+  const { data, isLoading, error, refetch } = useGetAllMovies(page, limit);
 
-    fetchMovies();
-  }, [page]);
+  const movies = data?.data || [];
+  const totalPages = data?.meta?.totalPages || 1;
 
   const goToPage = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
@@ -72,7 +54,7 @@ export default function Movies() {
     return pages;
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
@@ -87,9 +69,7 @@ export default function Movies() {
             {[...Array(8)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="bg-card rounded-xl overflow-hidden border border-border/50">
-                  {/* Poster Skeleton */}
                   <div className="aspect-video bg-muted" />
-                  {/* Content Skeleton */}
                   <div className="p-4 space-y-3">
                     <div className="h-5 bg-muted rounded w-3/4" />
                     <div className="h-9 bg-muted rounded" />
@@ -123,9 +103,9 @@ export default function Movies() {
           </div>
           <h1 className="text-2xl font-bold">Failed to Load Movies</h1>
           <p className="text-muted-foreground">
-            {error || "We couldn't fetch the movies. Please try again."}
+            {error.message || "We couldn't fetch the movies. Please try again."}
           </p>
-          <Button onClick={() => window.location.reload()} className="mt-4">
+          <Button onClick={() => refetch()} className="mt-4">
             Try Again
           </Button>
         </div>
@@ -170,7 +150,7 @@ export default function Movies() {
 
         {/* Movie Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
-          {movies.map((movie) => (
+          {movies.map((movie: Movie) => (
             <CardImage
               key={movie.id}
               movieId={movie.id}
@@ -212,7 +192,7 @@ export default function Movies() {
                       variant={page === pageNum ? "default" : "outline"}
                       size="sm"
                       onClick={() => goToPage(pageNum as number)}
-                      className="min-w-[36px]"
+                      className="min-w-9"
                     >
                       {pageNum}
                     </Button>
