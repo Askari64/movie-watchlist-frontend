@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import AddToWatchlist from "@/components/add-to-watchlist";
+import RemoveFromWatchlist from "./removeFromWatchlist";
+import UpdateWatchlistItemButton from "./updateWatchlistItemButton";
 import Link from "next/link";
 
 type watchlistCardProps = {
   title: string;
   imageUrl: string;
   movieId: string;
+  watchlistItemId: string;
   status: string;
 };
 
@@ -15,11 +17,12 @@ export function WatchlistCard({
   title,
   imageUrl,
   movieId,
+  watchlistItemId,
   status,
 }: watchlistCardProps) {
   return (
     <Card className="relative mx-auto max-w-[250] pt-0">
-      <AddToWatchlist movieId={movieId} />
+      <RemoveFromWatchlist/>
       <img
         src={imageUrl}
         alt={title}
@@ -32,9 +35,10 @@ export function WatchlistCard({
         <Button asChild className="w-full">
           <Link href={`/movies/${movieId}`}>More Info</Link>
         </Button>
-        <Button variant="outline" className="w-full">
-          {status}
-        </Button>
+        <UpdateWatchlistItemButton 
+          watchlistItemId={watchlistItemId} 
+          currentStatus={status} 
+        />
       </CardFooter>
     </Card>
   );
