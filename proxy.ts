@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// This file is used as a proxy/middleware to check for authentication on protected routes and redirect to signin page if not authenticated. It also redirects to movies page if user is already authenticated and trying to access signin or signup page.
+
 // List public routes because easier to track
 const publicRoutes = ["/", "/signin", "/signup"];
 
