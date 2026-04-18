@@ -22,7 +22,7 @@ export function WatchlistCard({
 }: watchlistCardProps) {
   return (
     <Card className="relative mx-auto max-w-[250] pt-0">
-      <RemoveFromWatchlist/>
+      <RemoveFromWatchlist watchlistItemId={watchlistItemId} />
       <img
         src={imageUrl}
         alt={title}
