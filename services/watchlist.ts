@@ -4,9 +4,17 @@ import { api } from "./api";
 export type watchlistStatus = "PLANNED" | "WATCHING" | "COMPLETED" | "DROPPED";
 
 export type WatchlistItem = {
+  id: string;
   movieId: string;
   userId: string;
   status: watchlistStatus;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type WatchlistResponse = {
+  status: string;
+  data: WatchlistItem[];
 };
 
 /**
@@ -15,7 +23,7 @@ export type WatchlistItem = {
  * No need to pass userId - backend gets it from the JWT cookie
  * @return Array of watchlist items with populated movie details
  */
-export async function getAllWatchlistItems() {
+export async function getAllWatchlistItems(): Promise<WatchlistResponse> {
   return api("/watchlist");
 }
 
@@ -29,7 +37,7 @@ export async function getAllWatchlistItems() {
 export async function addToWatchlist(
   movieId: string,
   status: watchlistStatus,
-) {
+): Promise<{ status: string; data: WatchlistItem }> {
   return api("/watchlist", {
     method: "POST",
     body: JSON.stringify({ movieId, status }),
@@ -37,7 +45,7 @@ export async function addToWatchlist(
 }
 
 /**
- * UPDATE WATCHLIST ITEM (status, rating, notes)
+ * UPDATE WATCHLIST ITEM status
  *
  * @param watchlistItemId - The ID of the watchlist item (not movieId!)
  * @param data - Partial data to update (status, rating, notes)
@@ -46,7 +54,7 @@ export async function addToWatchlist(
 export async function updateWatchlistItem(
   watchlistItemId: string,
   data: Partial<Pick<WatchlistItem, "status">>,
-) {
+): Promise<{ status: string; data: { watchlistItem: WatchlistItem } }> {
   return api(`/watchlist/${watchlistItemId}`, {
     method: "PATCH",
     body: JSON.stringify(data),
@@ -59,7 +67,9 @@ export async function updateWatchlistItem(
  * @param watchlistItemId - The ID of the watchlist item to delete (not movieId!)
  * @returns Success message or deleted item details
  */
-export async function deleteWatchlistItem(watchlistItemId: string) {
+export async function deleteWatchlistItem(
+  watchlistItemId: string,
+): Promise<{ status: string; message: string }> {
   return api(`/watchlist/${watchlistItemId}`, {
     method: "DELETE",
   });
