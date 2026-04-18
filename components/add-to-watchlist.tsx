@@ -28,7 +28,7 @@ function AddToWatchlist() {
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem onClick={() => handleAddToWatchlist("PLANNED")}>
             <Clock className="mr-2 h-4 w-4" />
-            <span>Plan to Watch</span>
+            <span>Planned</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleAddToWatchlist("WATCHING")}>
             <PlayCircle className="mr-2 h-4 w-4" />
