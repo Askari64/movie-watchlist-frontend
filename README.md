@@ -6,6 +6,7 @@
 5. Implement Contribute Page -  allows adding editing and deleting titles
 6. Implement Profile Page
 7. do token validation check on proxy/middleware to avoid user with expired token accessing protected route
+8. ~~Implement movies/movie page~~
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
