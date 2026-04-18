@@ -1,46 +1,91 @@
-## TODO
-1. ~~Write middleware based protected routes code~~
-2. ~~Implement Logout through navbar avatar dropdown~~
-3. ~~Implement Add to Watchlist with the dropdown on cards~~
-4. ~~Implement Watchlist Page - read your watchlist, edit and delete~~
-5. Implement Contribute Page -  allows adding editing and deleting titles
-6. Implement Profile Page
-7. do token validation check on proxy/middleware to avoid user with expired token accessing protected route
-8. ~~Implement movies/movie page~~
+# Movie Watchlist Frontend
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A modern, responsive web application that allows users to browse movies and manage their personal watchlists. Built with Next.js App Router, Tailwind CSS, and Shadcn UI.
 
-## Getting Started
+## 🚀 Features
 
-First, run the development server:
+- **Authentication System**: Secure login and signup flows with token validation.
+- **Protected Routes**: Middleware-based route protection to ensure only authenticated users can access their watchlists.
+- **Movie Browsing**: View and discover movies.
+- **Watchlist Management**:
+  - Add movies to your personal watchlist.
+  - View your watchlist.
+  - Update and edit watchlist entries.
+  - Remove items from your watchlist.
+- **Modern UI/UX**:
+  - Fully responsive design.
+  - Accessible components using Radix UI and Shadcn UI.
+  - Interactive elements like dropdowns and modal forms.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
+- **State Management & Data Fetching**: [TanStack React Query](https://tanstack.com/query/latest)
+- **Form Handling & Validation**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Language**: TypeScript
+
+## 📂 Project Structure
+
+```text
+├── app/                  # Next.js App Router (pages, layouts, routing)
+│   ├── (auth)/           # Authentication pages (Login, Signup)
+│   ├── movies/           # Movie browsing pages
+│   ├── profile/          # User profile management
+│   └── watchlist/        # Watchlist management pages
+├── components/           # Reusable UI components
+│   └── ui/               # Base Shadcn UI components
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility functions
+├── providers/            # Context providers (e.g., React Query Provider)
+├── services/             # API integration and data fetching services
+└── types/                # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏁 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js (v20 or higher recommended)
+- npm, yarn, pnpm, or bun
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository and navigate to the project folder:
+   ```bash
+   cd movie-watchlist
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Roadmap / TODO
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Write middleware-based protected routes
+- [x] Implement Logout through navbar avatar dropdown
+- [x] Implement Add to Watchlist functionality
+- [x] Implement Watchlist Page (read, edit, delete)
+- [x] Implement Movies / Movie Detail page
+- [ ] Implement Contribute Page (allow adding, editing, and deleting titles)
+- [ ] Complete Profile Page
+- [ ] Add token validation check on proxy/middleware to prevent users with expired tokens from accessing protected routes
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
