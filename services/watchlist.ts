@@ -7,8 +7,6 @@ export type WatchlistItem = {
   movieId: string;
   userId: string;
   status: watchlistStatus;
-  rating: number | null;
-  notes: string | null;
 };
 
 /**
@@ -26,19 +24,15 @@ export async function getAllWatchlistItems() {
  *
  * @param movieId - ID of the movie to add
  * @param status - Initial status (e.g., "PLANNED")
- * @param rating - Optional initial rating 1-10
- * @param notes - Optional initial notes
  * @return The created watchlist item
  */
 export async function addToWatchlist(
   movieId: string,
   status: watchlistStatus,
-  rating?: number,
-  notes?: string,
 ) {
   return api("/watchlist", {
     method: "POST",
-    body: JSON.stringify({ movieId, status, rating, notes }),
+    body: JSON.stringify({ movieId, status }),
   });
 }
 
@@ -51,7 +45,7 @@ export async function addToWatchlist(
  */
 export async function updateWatchlistItem(
   watchlistItemId: string,
-  data: Partial<Pick<WatchlistItem, "status" | "rating" | "notes">>,
+  data: Partial<Pick<WatchlistItem, "status">>,
 ) {
   return api(`/watchlist/${watchlistItemId}`, {
     method: "PATCH",
