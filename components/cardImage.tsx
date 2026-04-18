@@ -25,7 +25,7 @@ export function CardImage({title, imageUrl, movieId}: CardImageProps) {
         className="relative z-20 aspect-video w-full object-fill brightness-80 dark:brightness-40"
       />
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="truncate w-full text-center">{title}</CardTitle>
       </CardHeader>
       <CardFooter>
         <Button asChild className="w-full"><Link href={`/movies/${movieId}`}>More Info</Link></Button>

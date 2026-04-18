@@ -29,7 +29,7 @@ export function WatchlistCard({
         className="relative z-20 aspect-video w-full object-fill brightness-80 dark:brightness-40"
       />
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="truncate w-full text-center">{title}</CardTitle>
       </CardHeader>
       <CardFooter className="flex flex-col gap-1">
         <Button asChild className="w-full">
