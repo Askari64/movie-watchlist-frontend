@@ -3,13 +3,27 @@ import { api } from "./api";
 //TYPESCRIPT INTERFACE
 export type watchlistStatus = "PLANNED" | "WATCHING" | "COMPLETED" | "DROPPED";
 
+// Movie type matching the populated movie object
+export type WatchlistMovie = {
+  id: string;
+  title: string;
+  overview: string | null;
+  releaseYear: number;
+  genres: string[];
+  runtime: number | null;
+  posterURL: string;
+  createdBy: string;
+  createdAt: string;
+};
+
 export type WatchlistItem = {
   id: string;
-  movieId: string;
   userId: string;
+  movieId: string;
   status: watchlistStatus;
   createdAt: string;
   updatedAt: string;
+  movie: WatchlistMovie; 
 };
 
 export type WatchlistResponse = {
