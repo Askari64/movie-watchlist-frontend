@@ -18,7 +18,7 @@ type CardImageProps = {
 export function CardImage({title, imageUrl, movieId}: CardImageProps) {
   return (
     <Card className="relative mx-auto max-w-[250] pt-0">
-      <AddToWatchlist />
+      <AddToWatchlist movieId={movieId} />
       <img
         src={imageUrl}
         alt={title}

@@ -11,17 +11,25 @@ import {
   PlayCircle,
   StopCircle,
 } from "lucide-react";
+import { useAddToWatchlist } from "@/hooks/useAddToWatchlist";
 
-function AddToWatchlist() {
+type AddToWatchlistProps = {
+  movieId: string;
+}
+
+function AddToWatchlist({movieId}: AddToWatchlistProps) {
+
+  const {mutate, isPending} = useAddToWatchlist();
+
   const handleAddToWatchlist = (status: string) => {
-    console.log(status);
-  };
+    mutate({ movieId, status });
+  }
 
   return (
     <div className="absolute top-2 right-2 z-30">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="p-2 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm transition-all">
+          <button disabled={isPending} className="p-2 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm transition-all">
             <BookmarkPlus className="h-3 w-3 text-white" />
           </button>
         </DropdownMenuTrigger>
