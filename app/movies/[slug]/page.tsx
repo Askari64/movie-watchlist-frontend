@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useParams } from "next/navigation";
@@ -21,7 +22,7 @@ export default function MovieDetailPage() {
           <div className="animate-pulse space-y-6 md:space-y-8">
             <div className="h-5 md:h-6 bg-muted rounded w-20 md:w-24" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              <div className="aspect-2/3 bg-muted rounded-xl md:rounded-2xl max-w-[250px] md:max-w-none mx-auto md:mx-0" />
+              <div className="aspect-2/3 bg-muted rounded-xl md:rounded-2xl max-w-62.5 md:max-w-none mx-auto md:mx-0" />
               <div className="md:col-span-2 space-y-4 md:space-y-6">
                 <div className="h-8 md:h-12 bg-muted rounded w-3/4" />
                 <div className="h-5 md:h-6 bg-muted rounded w-1/2 md:w-1/4" />
@@ -69,7 +70,7 @@ export default function MovieDetailPage() {
           <div className="md:col-span-1">
             {/* Mobile: centered, smaller. Desktop: sticky, full size */}
             <div className="md:sticky md:top-24 space-y-4">
-              <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl ring-1 ring-border/50 max-w-[250px] md:max-w-none mx-auto md:mx-0">
+              <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl ring-1 ring-border/50 max-w-62.5 md:max-w-none mx-auto md:mx-0">
                 <img
                   src={movie.posterURL}
                   alt={movie.title}
