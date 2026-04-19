@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logout } from "@/services/auth";
 
@@ -24,6 +25,7 @@ export function AvatarDropdown() {
     }
   };
 
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,8 +38,8 @@ export function AvatarDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Contribution</DropdownMenuItem>
+          <DropdownMenuItem><Link href="/profile">Profile</Link></DropdownMenuItem>
+          <DropdownMenuItem><Link href="/movies/contribution">Contribution</Link></DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
