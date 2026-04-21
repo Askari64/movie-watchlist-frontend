@@ -25,7 +25,6 @@ export function AvatarDropdown() {
     }
   };
 
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,8 +37,9 @@ export function AvatarDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
-          <DropdownMenuItem><Link href="/profile">Profile</Link></DropdownMenuItem>
-          <DropdownMenuItem><Link href="/movies/contribution">Contribution</Link></DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/profile">Profile</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
