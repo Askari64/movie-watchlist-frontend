@@ -50,11 +50,11 @@ export async function getMovieById(movieId: string) {
  */
 export async function createMovie(movieData: {
   title: string
-  overview?: string
+  overview: string
   releaseYear: number
-  genres?: string[]
-  runtime?: number
-  posterURL?: string
+  genres: string[]
+  runtime: number
+  posterURL: string
 }) {
   return api("/movies/add", {
     method: "POST",
