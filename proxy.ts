@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // This file is used as a proxy/middleware to check for authentication on protected routes and redirect to signin page if not authenticated. It also redirects to movies page if user is already authenticated and trying to access signin or signup page.
 
 // List public routes because easier to track
-const publicRoutes = ["/", "/signin", "/signup"];
+const publicRoutes = ["/signin", "/signup"];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -19,6 +19,15 @@ export function proxy(request: NextRequest) {
   );
 
   const token = request.cookies.get("jwtAccessToken")?.value;
+
+  //special handling for root route - if user is authenticated then redirect to movies page else redirect to signin page
+  if (pathname === "/") {
+    if (token) {
+      return NextResponse.redirect(new URL("/movies", request.url));
+    } else {
+      return NextResponse.redirect(new URL("/signin", request.url));
+    }
+  }
 
   // if isProtectedRoute and no token then redirect to login page
   if (isProtectedRoute && !token) {
