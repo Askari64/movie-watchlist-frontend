@@ -77,12 +77,14 @@ A modern, responsive web application that allows users to browse movies and mana
 
 ## 📝 Roadmap / TODO
 
+### This project has now been temporarily freezed since it has all core functionalities needed
+
 - [x] Write middleware-based protected routes
 - [x] Implement Logout through navbar avatar dropdown
 - [x] Implement Add to Watchlist functionality
 - [x] Implement Watchlist Page (read, edit, delete)
 - [x] Implement Movies / Movie Detail page
-- [ ] Implement Contribute Page (allow adding, editing, and deleting titles)
+- [ ] Implement Contribute Page (~~allow adding~~, editing, and deleting titles) (partially done)
 - [ ] Complete Profile Page
 - [ ] Add token validation check on proxy/middleware to prevent users with expired tokens from accessing protected routes
 
