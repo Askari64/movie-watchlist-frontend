@@ -56,7 +56,7 @@ export async function createMovie(movieData: {
   runtime?: number
   posterURL?: string
 }) {
-  return api("/movies", {
+  return api("/movies/add", {
     method: "POST",
     body: JSON.stringify(movieData),
   })
