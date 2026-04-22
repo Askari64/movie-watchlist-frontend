@@ -2,6 +2,29 @@
 
 A modern, responsive web application that allows users to browse movies and manage their personal watchlists. Built with Next.js App Router, Tailwind CSS, and Shadcn UI.
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="./screenshots/signin.png" alt="Sign In" width="400" />
+  <img src="./screenshots/signup.png" alt="Sign Up" width="400" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/movies.png" alt="Movies Grid" width="800" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/moviedetails.png" alt="Movie Details" width="800" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/watchlist.png" alt="Watchlist" width="800" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/contribution.png" alt="Contribute Movie" width="600" />
+</p>
+
 ## 🚀 Features
 
 - **Authentication System**: Secure login and signup flows with token validation.
